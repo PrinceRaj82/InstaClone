@@ -13,7 +13,7 @@ const Home = () => {
     return (
         <div className="flex h-screen">
         {/* Feed Area (scrollable) */}
-        <div className="w-full overflow-y-auto h-screen md:pb-0 scrollbar-hide ">
+        <div className="w-full overflow-y-auto h-screen md:pb-0 scrollbar-hidden  ">
           
           {/* 🔥 Place Stories Component Here */}
           <Stories />

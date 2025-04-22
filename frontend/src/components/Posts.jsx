@@ -7,7 +7,7 @@ const Posts = () => {
   return (
     <div className="flex flex-col gap-4 items-end scrollbar-hide W-[100%]">
       {posts.map((post) => (
-        <div key={post._id} className="w-[100%] mx-auto border border-r-emerald-300">
+        <div key={post._id} className="w-[100%] mx-auto ">
           <Post post={post} />
         </div>
       ))}
