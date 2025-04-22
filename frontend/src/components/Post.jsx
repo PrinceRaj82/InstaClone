@@ -34,13 +34,12 @@ const Post = ({ post }) => {
         try {
             const action = liked ? 'dislike' : 'like';
             const res = await axios.get(`http://localhost:8000/api/v1/post/${post._id}/${action}`, { withCredentials: true });
-            console.log(res.data);
             if (res.data.success) {
                 const updatedLikes = liked ? postLike - 1 : postLike + 1;
                 setPostLike(updatedLikes);
                 setLiked(!liked);
 
-                // apne post ko update krunga
+                // Update post's like status
                 const updatedPostData = posts.map(p =>
                     p._id === post._id ? {
                         ...p,
@@ -56,7 +55,6 @@ const Post = ({ post }) => {
     }
 
     const commentHandler = async () => {
-
         try {
             const res = await axios.post(`http://localhost:8000/api/v1/post/${post._id}/comment`, { text }, {
                 headers: {
@@ -64,7 +62,6 @@ const Post = ({ post }) => {
                 },
                 withCredentials: true
             });
-            console.log(res.data);
             if (res.data.success) {
                 const updatedCommentData = [...comment, res.data.comment];
                 setComment(updatedCommentData);
@@ -106,17 +103,19 @@ const Post = ({ post }) => {
             console.log(error);
         }
     }
+
     return (
-        <div className='my-8 w-full max-w-sm mx-auto'>
+        <div className='my-8  z-[-10] w-full mx-auto' style={{ maxWidth: '60%', minWidth: '300px' }}>
+
             <div className='flex items-center justify-between'>
-                <div className='flex items-center gap-2'>
+                <div className='flex items-center gap-2 '>
                     <Avatar>
                         <AvatarImage src={post.author?.profilePicture} alt="post_image" />
                         <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
                     <div className='flex items-center gap-3'>
                         <h1>{post.author?.username}</h1>
-                       {user?._id === post.author._id &&  <Badge variant="secondary">Author</Badge>}
+                        {user?._id === post.author._id &&  <Badge variant="secondary">Author</Badge>}
                     </div>
                 </div>
                 <Dialog>
@@ -125,9 +124,8 @@ const Post = ({ post }) => {
                     </DialogTrigger>
                     <DialogContent className="flex flex-col items-center text-sm text-center">
                         {
-                        post?.author?._id !== user?._id && <Button variant='ghost' className="cursor-pointer w-fit text-[#ED4956] font-bold">Unfollow</Button>
+                            post?.author?._id !== user?._id && <Button variant='ghost' className="cursor-pointer w-fit text-[#ED4956] font-bold">Unfollow</Button>
                         }
-                        
                         <Button variant='ghost' className="cursor-pointer w-fit">Add to favorites</Button>
                         {
                             user && user?._id === post?.author._id && <Button onClick={deletePostHandler} variant='ghost' className="cursor-pointer w-fit">Delete</Button>
@@ -135,6 +133,7 @@ const Post = ({ post }) => {
                     </DialogContent>
                 </Dialog>
             </div>
+
             <img
                 className='rounded-sm my-2 w-full aspect-square object-cover'
                 src={post.image}
@@ -143,10 +142,10 @@ const Post = ({ post }) => {
 
             <div className='flex items-center justify-between my-2'>
                 <div className='flex items-center gap-3'>
-                    {
-                        liked ? <FaHeart onClick={likeOrDislikeHandler} size={'24'} className='cursor-pointer text-red-600' /> : <FaRegHeart onClick={likeOrDislikeHandler} size={'22px'} className='cursor-pointer hover:text-gray-600' />
+                    {liked ? 
+                        <FaHeart onClick={likeOrDislikeHandler} size={'24'} className='cursor-pointer text-red-600' /> : 
+                        <FaRegHeart onClick={likeOrDislikeHandler} size={'22px'} className='cursor-pointer hover:text-gray-600' />
                     }
-
                     <MessageCircle onClick={() => {
                         dispatch(setSelectedPost(post));
                         setOpen(true);
@@ -155,20 +154,24 @@ const Post = ({ post }) => {
                 </div>
                 <Bookmark onClick={bookmarkHandler} className='cursor-pointer hover:text-gray-600' />
             </div>
+
             <span className='font-medium block mb-2'>{postLike} likes</span>
             <p>
                 <span className='font-medium mr-2'>{post.author?.username}</span>
                 {post.caption}
             </p>
-            {
-                comment.length > 0 && (
-                    <span onClick={() => {
-                        dispatch(setSelectedPost(post));
-                        setOpen(true);
-                    }} className='cursor-pointer text-sm text-gray-400'>View all {comment.length} comments</span>
-                )
-            }
+
+            {comment.length > 0 && (
+                <span onClick={() => {
+                    dispatch(setSelectedPost(post));
+                    setOpen(true);
+                }} className='cursor-pointer text-sm text-gray-400'>
+                    View all {comment.length} comments
+                </span>
+            )}
+
             <CommentDialog open={open} setOpen={setOpen} />
+
             <div className='flex items-center justify-between'>
                 <input
                     type="text"
@@ -177,13 +180,12 @@ const Post = ({ post }) => {
                     onChange={changeEventHandler}
                     className='outline-none text-sm w-full'
                 />
-                {
-                    text && <span onClick={commentHandler} className='text-[#3BADF8] cursor-pointer'>Post</span>
+                {text && 
+                    <span onClick={commentHandler} className='text-[#3BADF8] cursor-pointer'>Post</span>
                 }
-
             </div>
         </div>
     )
 }
 
-export default Post
+export default Post;

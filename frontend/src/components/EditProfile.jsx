@@ -70,12 +70,12 @@ const EditProfile = () => {
   }
 
   return (
-    <div className="flex max-w-2xl w-full mx-auto px-4 md:px-6">
+    <div className="flex max-w-2xl w-full mx-auto px-4 md:px-6 bg-[#121212] text-white">
       <section className="flex flex-col gap-6 w-full my-8">
         <h1 className="font-bold text-xl dark:text-white">Edit Profile</h1>
 
-        <div className="flex items-center justify-between bg-gray-100 dark:bg-[#1f1f1f] rounded-xl p-4">
-          <div className="flex items-center gap-3">
+        <div className="flex items-center justify-between bg-gray-100 dark:bg-[#1f1f1f] rounded-xl p-4 bg-[#1f1f1f] text-white">
+          <div className="flex items-center gap-3 bg-[#1f1f1f] text-white">
             <Avatar>
               <AvatarImage src={user?.profilePicture} alt="post_image" />
               <AvatarFallback>CN</AvatarFallback>
@@ -89,7 +89,7 @@ const EditProfile = () => {
             ref={imageRef}
             onChange={fileChangeHandler}
             type="file"
-            className="hidden"
+            className="hidden bg-[#1f1f1f] text-white"
           />
           <Button onClick={() => imageRef?.current.click()} className="h-8 bg-[#0095F6] hover:bg-[#318bc7] text-white">
             Change photo
@@ -102,20 +102,20 @@ const EditProfile = () => {
             value={input.bio}
             onChange={(e) => setInput({ ...input, bio: e.target.value })}
             name="bio"
-            className="focus-visible:ring-transparent bg-white dark:bg-[#1f1f1f] dark:text-white"
+            className="focus-visible:ring-transparent bg-[#1f1f1f] text-white"
           />
         </div>
 
         <div>
           <h1 className="font-bold mb-2 dark:text-white">Gender</h1>
           <Select defaultValue={input.gender} onValueChange={selectChangeHandler}>
-            <SelectTrigger className="w-full dark:bg-[#1f1f1f] dark:text-white">
+            <SelectTrigger className="w-full bg-[#1f1f1f] text-white">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="dark:bg-[#1f1f1f] dark:text-white">
-              <SelectGroup>
-                <SelectItem value="male">Male</SelectItem>
-                <SelectItem value="female">Female</SelectItem>
+            <SelectContent className="bg-[#1f1f1f] text-white">
+              <SelectGroup className='bg-[#1f1f1f] text-white'>
+                <SelectItem value="male" className='bg-[#1f1f1f] text-white'>Male</SelectItem>
+                <SelectItem value="female" className='bg-[#1f1f1f] text-white'>Female</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
