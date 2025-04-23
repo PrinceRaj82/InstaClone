@@ -176,7 +176,7 @@ const dummyStories = [
 
 const Stories = () => {
   return (
-    <div className="fixed top-0 z-20 max-w-[1300px] border-b border-gray-800 px-4 py-2 overflow-x-auto scrollbar-hidden bg-black over">
+    <div className="fixed top-0 z-20 max-w-[1300px] border-b border-gray-800 px-4 py-2 overflow-x-auto scrollbar-hidden bg-white over">
       <div className="flex gap-4">
         {dummyStories.map((story) => (
           <div
